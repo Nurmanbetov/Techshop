@@ -28,19 +28,22 @@
       </li>
     </ul>
   </nav>
-  <div class="row">
-    <div class="col-lg-3 col-md-2">
-      Боковая панель<br>
-      Боковая панель<br>
-      Боковая панель<br>
-      Боковая панель<bt></bt>
-    </div>
-    <div class="col-lg-9 col-md-10 container-fluid"><br>
+  <div class="container">
+    <div class="row">
+     {% block page %}
+      <div class="col-lg-3 col-md-2">
+        Боковая панель<br>
+        Боковая панель<br>
+        Боковая панель<br>
+        Боковая панель<bt></bt>
+      </div>
+      <div class="col-lg-9 col-md-10 container-fluid"><br>
   
-    {% block content %}
-
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </div>
+      {% endblock %}
   </div>
-    
+  </div> 
 </body>
 </html>
