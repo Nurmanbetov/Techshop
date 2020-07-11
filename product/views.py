@@ -1,10 +1,16 @@
 from django.shortcuts import render
-from .models import Product
+from product.models import *
 
 
 def products(request):
-    products = Product.objects.all()
-    return render(request, "product/homepage.html", {"products": products})
+    context = {}
+    context["products"] = Product.objects.filter(available=True)
+    return render(request, "product/products.html", context)
+
+def product(request, id):
+    context = {}
+    context["product"] = Product.objects.get(id=id)
+    return render(request, "product/product.html", context)
 
 
 

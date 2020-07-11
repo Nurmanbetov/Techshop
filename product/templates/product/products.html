@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <h2>Все товары в наличии</h2>
+    <ol>
+        {% for product in products %}
+            <a href="{% url 'product' product.id %}"><li>{{ product }} - {{ product.category}}</li></a>
+    
+        {% endfor %}
+    </ol>
+    
+{% endblock %}

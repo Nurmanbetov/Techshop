@@ -1,7 +1,8 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,\
+    HttpResponse, redirect 
 
 def home(request):
-    return HttpResponse("homepage")
+    return redirect("products")
 
 
 def test(request):
