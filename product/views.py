@@ -3,10 +3,14 @@ from product.models import *
 from product.forms import ProductForm
 
 
+
 def products(request):
     context = {}
     context["products"] = Product.objects.filter(available=True)
+
+
     return render(request, "product/products.html", context)
+
 
 def product(request, id):
     context = {}
@@ -47,8 +51,5 @@ def product_edit(request, id):
         "product/form.html",
         context
     )
-
-
-
 
 

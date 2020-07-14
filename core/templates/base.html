@@ -19,7 +19,7 @@
   
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
     <!-- <a class="navbar-brand" href="#">Logo</a> -->
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'products' %}">Все товары</a>
       </li>
@@ -27,6 +27,11 @@
         <a class="nav-link" href="{% url 'product-create' %}">Добавить товар</a>
       </li>
     </ul>
+    <form  class="form-inline" action="{% url 'product' %} " method="POST">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="text" name="key_word" placeholder="Наименование товара">
+      <button class="btn btn-primary">Поиск</button>
+    </form>
   </nav>
   <div class="container">
     <div class="row">
