@@ -14,7 +14,11 @@
     
 <div class="container-fluid">
     <br>
-    <h3>Добро пожаловать в интернет магазин Tech Shop!</h3>
+    {% if message %}
+      <h3 class="alert alert-success">{{ message }}</h3>
+    {% else %}
+      <h3>Добро пожаловать в интернет магазин Tech Shop!</h3>
+    {% endif %}
 </div>
   
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
@@ -27,9 +31,9 @@
         <a class="nav-link" href="{% url 'product-create' %}">Добавить товар</a>
       </li>
     </ul>
-    <form  class="form-inline" action="{% url 'product' %} " method="POST">
+    <form  class="form-inline" action="{% url 'products' %}">
       {% csrf_token %}
-      <input class="form-control mr-sm-2" type="text" name="key_word" placeholder="Наименование товара">
+      <input class="form-control mr-sm-2" type="text" name="query" placeholder="Наименование товара">
       <button class="btn btn-primary">Поиск</button>
     </form>
   </nav>

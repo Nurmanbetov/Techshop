@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from product.models import *
 from product.forms import ProductForm
 
@@ -6,9 +7,16 @@ from product.forms import ProductForm
 
 def products(request):
     context = {}
-    context["products"] = Product.objects.filter(available=True)
-
-
+    if "query" in request.GET:
+        word = request.GET.get("query")
+        context["products"] = Product.objects.filter(
+            Q(available=True),
+            Q(name__contains=word) |
+            Q(description__contains=word) |
+            Q(category__name__contains=word)
+        )
+    else:
+        context["products"] = Product.objects.filter(available=True)
     return render(request, "product/products.html", context)
 
 
@@ -19,13 +27,15 @@ def product(request, id):
 
 
 def product_create(request):
+    context = {}
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect(products)
+            context["product"] = Product.objects.get(id=id)
+            context["message"] = "Товар был успешно добавлен"
+            return render("product/products.html", context)
 
-    context = {}
     context["form"] = ProductForm()
 
     return render(
@@ -36,14 +46,17 @@ def product_create(request):
 
 def product_edit(request, id):
     product = Product.objects.get(id=id)
+    context = {}
 
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect("product", id=product.id)
+            context["product"] = Product.objects.get(id=id)
+            context["message"] = "Информация успешно обновлена"
+            return render(request, "product/product.html", context)
 
-    context = {}
+    
     context["form"] = ProductForm(instance=product)
 
     return render(
