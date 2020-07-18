@@ -23,6 +23,12 @@ def products(request):
 
 
 def product(request, id):
+    if request.method == "POST":
+            product = Product.objects.get(id=id)
+            product.available = False
+            product.save()
+            return redirect("home")
+
     context = {} 
     context["product"] = Product.objects.get(id=id)
     return render(request, "product/product.html", context)
