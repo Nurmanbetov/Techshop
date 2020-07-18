@@ -1,3 +1,4 @@
+
 {% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="en">
@@ -27,32 +28,52 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'products' %}">Все товары</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'product-create' %}">Добавить товар</a>
-      </li>
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product-create' %}">Добавить товар</a>
+        </li>
+      {% endif %}
     </ul>
-    <form  class="form-inline" action="{% url 'products' %}">
+    <form class="form-inline my-2 my-lg-0 mr-sm-2" action="{% url 'products' %}">
       {% csrf_token %}
-      <input class="form-control mr-sm-2" type="text" name="query" placeholder="Наименование товара">
-      <button class="btn btn-primary">Поиск</button>
+      <input class="form-control mr-sm-2" type="text" name="query" placeholder="Нименование товара">
+      <button class="btn btn-primary my-2 my-sm-0">Поиск</button>
     </form>
+    {% if request.user.is_authenticated %}
+      <a class="btn btn-info mr-sm-2" href="{% url 'profile' %}">
+        {{ request.user.username }}
+      </a>
+      <a class="btn btn-danger" href="{% url 'logout' %}">
+        Выход
+      </a>
+    {% else %}
+      <a class="btn btn-primary mr-sm-2" href="{% url 'login' %}">
+        Вход
+      </a>
+      <a class="btn btn-primary" href="{% url 'registration' %}">
+        Регистрация
+      </a>
+    {% endif %}
   </nav>
   <div class="container">
     <div class="row">
-     {% block page %}
-      <div class="col-lg-3 col-md-2">
-        Боковая панель<br>
-        Боковая панель<br>
-        Боковая панель<br>
-        Боковая панель<bt></bt>
-      </div>
-      <div class="col-lg-9 col-md-10 container-fluid"><br>
-  
-        {% block content %}
-        {% endblock %}
-      </div>
+      {% block page %}
+        <div class="col-lg-3 col-md-2">
+          боковая панель<br>
+          боковая панель<br>
+          боковая панель<br>
+          боковая панель<br>
+          боковая панель<br>
+          боковая панель<br>
+          боковая панель
+        </div>
+        <div class="col-lg-9 col-md-10"><br>
+          {% block content %}
+
+          {% endblock %}
+        </div>
       {% endblock %}
+    </div>
   </div>
-  </div> 
 </body>
 </html>

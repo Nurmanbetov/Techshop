@@ -1,9 +1,19 @@
 from django.db import models
- 
+from django.contrib.auth.models import User
+
 
 class Product(models.Model):
     name = models.CharField(
         max_length=255, verbose_name="Название")
+
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="product",
+        verbose_name="Товар"
+    )
 
     category = models.ForeignKey(
         to="Category",
@@ -18,7 +28,8 @@ class Product(models.Model):
         null=True,
         blank=True,
         upload_to="product_images",
-        verbose_name="Изображение товара"
+        verbose_name="Изображение товара",
+        default="static/no_image.phg"
     )
 
     description = models.TextField(
@@ -48,7 +59,7 @@ class Product(models.Model):
         verbose_name_plural ="Товар"
 
 
-class Category(models. Model):
+class Category(models.Model):
     name = models.CharField(
         max_length=255, verbose_name="Название")
 
