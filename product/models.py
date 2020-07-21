@@ -12,7 +12,7 @@ class Product(models.Model):
         null=True,
         blank=True,
         related_name="product",
-        verbose_name="Товар"
+        verbose_name="Продавец"
     )
 
     category = models.ForeignKey(
@@ -49,6 +49,11 @@ class Product(models.Model):
     available = models.BooleanField(
         default=True, 
         verbose_name="В наличии")
+
+    deleted = models.BooleanField(
+        default=False,
+        verbose_name="Удалено"
+    )
     
 
     def __str__(self):

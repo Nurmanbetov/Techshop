@@ -30,9 +30,10 @@
                     {% csrf_token %}
                     <button class="btn btn-danger" href="" >Удалить</button>
                  </form>
+        {% elif product.user %}
+            <a href="{% url 'profile' product.user.id %}">{{ product.user }}</a>
         {% endif %}
     </div>
 </div>
     
-
 {% endblock %}

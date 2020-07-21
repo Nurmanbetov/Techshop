@@ -13,22 +13,20 @@ def products(request):
         word = request.GET.get("query")
         context["products"] = Product.objects.filter(
             Q(available=True),
+            Q(deleted=False),
             Q(name__contains=word) |
             Q(description__contains=word) |
             Q(category__name__contains=word)
         )
     else:
-        context["products"] = Product.objects.filter(available=True)
+        context["products"] = Product.objects.filter(
+            available=True,
+            deleted=False
+        )
     return render(request, "product/products.html", context)
 
 
 def product(request, id):
-    if request.method == "POST":
-            product = Product.objects.get(id=id)
-            product.available = False
-            product.save()
-            return redirect("home")
-
     context = {} 
     context["product"] = Product.objects.get(id=id)
     return render(request, "product/product.html", context)
@@ -43,7 +41,10 @@ def product_create(request):
             new_product = form.save()
             new_product.user = request.user
             new_product.save()
-            context["products"] = Product.objects.filter(available=True)
+            context["products"] = Product.objects.filter(
+                available=True,
+                deleted=False
+            )
             context["message"] = "Товар был успешно добавлен"
             return render( request ,"product/products.html", context)
 
@@ -80,5 +81,21 @@ def product_edit(request, id):
         "product/form.html",
         context
     )
+
+
+@login_required(login_url='/login/')
+def product_delete(request,id):
+    product = Product.objects.get(id=id)
+    context = {}
+
+    if product.user != request.user:
+        context["message"] = "У вас нет доступа!"
+    else:
+        product.deleted = True
+        product.save()
+        context["message"] = "Товар был удален"
+
+    context["type"] = "danger"
+    return render(request, "core/message,html", context)
 
 
