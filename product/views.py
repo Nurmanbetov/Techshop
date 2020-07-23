@@ -84,7 +84,7 @@ def product_edit(request, id):
 
 
 @login_required(login_url='/login/')
-def product_delete(request,id):
+def product_delete(request, id):
     product = Product.objects.get(id=id)
     context = {}
 
