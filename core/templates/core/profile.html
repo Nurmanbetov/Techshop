@@ -11,8 +11,8 @@
         <li>Количество товаров: {{ user.product.count }}</li>
     </ul>
     <hr>
-    <h4>Изминить пароль</h4>
     {% if user == request.user %}
+    <h4>Изминить пароль</h4>
         <form action="{% url 'change-password' %}" method="POST"> 
             {% csrf_token %}
             {% bootstrap_form password_change_form %}
