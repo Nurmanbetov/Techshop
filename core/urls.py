@@ -1,4 +1,4 @@
-from django.urls import path 
+from django.urls import path
 from .views import *
 
 urlpatterns = [
@@ -9,4 +9,4 @@ urlpatterns = [
     path("registration/", registration, name="registration"),
     path("change-password/", change_password, name="change-password"),
     path("profile/<int:pk>/", profile, name="profile"),
-]
+    ]

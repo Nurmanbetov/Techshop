@@ -1,4 +1,4 @@
-from django.shortcuts import render 
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from core.forms import PasswordChangeForm
 from product.models import Product

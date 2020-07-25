@@ -3,7 +3,6 @@ from django.db.models import Q
 from product.models import Product
 
 
-
 def products(request):
     context = {}
     if "query" in request.GET:

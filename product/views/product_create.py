@@ -4,7 +4,6 @@ from product.models import Product
 from django.contrib.auth.decorators import login_required
 
 
-
 @login_required(login_url="login")
 def product_create(request):
     context = {}
@@ -19,7 +18,7 @@ def product_create(request):
                 deleted=False
             )
             context["message"] = "Товар был успешно добавлен"
-            return render( request ,"product/products.html", context)
+            return render(request, "product/products.html", context)
 
     context["form"] = ProductForm()
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib import auth 
+from django.contrib import auth
 from .user_not_authenticated import user_not_authenticated
 from django.shortcuts import render, redirect
 
@@ -21,4 +21,3 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("home")
-    

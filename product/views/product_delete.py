@@ -3,8 +3,6 @@ from django.shortcuts import render
 from product.models import Product
 
 
-
-
 @login_required(login_url='/login/')
 def product_delete(request, id):
     product = Product.objects.get(id=id)

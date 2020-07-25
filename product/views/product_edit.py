@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from product.models import Product
 
 
-
 @login_required(login_url="login")
 def product_edit(request, id):
     product = Product.objects.get(id=id)
@@ -21,7 +20,6 @@ def product_edit(request, id):
             context["message"] = "Информация успешно обновлена"
             return render(request, "product/product.html", context)
 
-    
     context["form"] = ProductForm(instance=product)
 
     return render(

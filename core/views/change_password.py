@@ -10,5 +10,5 @@ def change_password(request):
     if password_1 == password_2:
         user.set_password(password_1)
         user.save()
-    
+
     return redirect("profile", pk=user.id)
