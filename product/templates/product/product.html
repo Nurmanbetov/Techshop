@@ -26,14 +26,15 @@
                 Изменить
             </a>
             <hr>
-                <form method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn-danger" href="" >Удалить</button>
-                 </form>
+            <a 
+                class="btn btn-lg btn-danger" 
+                href="{% url 'product-delete' product.id %}"
+            >
+                Удалить
+            </a>
         {% elif product.user %}
             <a href="{% url 'profile' product.user.id %}">{{ product.user }}</a>
         {% endif %}
     </div>
 </div>
-    
 {% endblock %}

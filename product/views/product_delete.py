@@ -16,4 +16,4 @@ def product_delete(request, id):
         context["message"] = "Товар был удален"
 
     context["type"] = "danger"
-    return render(request, "core/message,html", context)
+    return render(request, "core/message.html", context)

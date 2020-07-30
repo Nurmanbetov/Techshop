@@ -11,8 +11,5 @@ class RegistrationForm(UserCreationForm):
 
 
 
-class PasswordChangeForm(forms.Form):
-    password_1 = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(widget=forms.PasswordInput)
 
     
