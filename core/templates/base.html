@@ -1,8 +1,9 @@
 
 {% load bootstrap4 %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Shop</title>
@@ -10,37 +11,35 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</head>
+  </head>
 <body>
     
-<div class="container-fluid">
-    <br>
-    {% if message %}
-      <h3 class="alert alert-success">{{ message }}</h3>
-    {% else %}
-      <h3>Добро пожаловать в интернет магазин Tech Shop!</h3>
-    {% endif %}
-</div>
-  
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-    <!-- <a class="navbar-brand" href="#">Logo</a> -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'products' %}">Все товары</a>
+        <a class="nav-link" href="{% url 'products' %}">Все товары </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'sellers' %}">Все продавцы</a>
       </li>
       {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'product-create' %}">Добавить товар</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Добавить
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'product-create' %}">Добавить товар</a>
+            {% if request.user.is_staff %}
+              <a class="dropdown-item" href="{% url 'category-create' %}">Добавить категорию</a>
+            {% endif %}
+          </div>
         </li>
       {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0 mr-sm-2" action="{% url 'products' %}">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="text" name="query" placeholder="Нименование товара">
-      <button class="btn btn-primary my-2 my-sm-0">Поиск</button>
+      <button class="btn btn-success my-2 my-sm-0" >Поиск</button>
     </form>
     {% if request.user.is_authenticated %}
       <a class="btn btn-info mr-sm-2" href="{% url 'profile' request.user.pk %}">
@@ -56,33 +55,24 @@
       <a class="btn btn-primary" href="{% url 'registration' %}">
         Регистрация
       </a>
-    {% endif %}
+      {% endif %}
   </nav>
   <div>
     {% block page %}
-      <div class="row">
-        <div class="col-lg-3 col-md-2">
-          <div class="list-group">
+    <div class="row">
+      <div class="col-lg-3 col-md-2">
+        <div class="list-group">
           {% for category in categories %}
-            <a 
-              href="{% url 'category' category.id %}" 
-              class="list-group-item
-              {% if category.id == category_pk %}
-                list-group-item-info 
-              {% endif %}
-              ">
-              {{ category.name }}
-            </a>
+            {% include "includes/category.html" %}
           {% endfor %}
-          </div>
         </div>
-        <div class="col-lg-9 col-md-10"><br>
-          {% block content %}
-
-          {% endblock %}
-          {% endblock %}
-        </div>
+      </div>
+      <div class="col-lg-8 col-md-10"><br>
+        {% block content %}
+        {% endblock %}     
+      </div>
     </div>
+    {% endblock %}
   </div>
 </body>
 </html>

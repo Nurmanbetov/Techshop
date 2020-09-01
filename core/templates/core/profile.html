@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block content %}
     <h3>Профиль пользователя {{ user.username }}</h3>
     <ul>
         <li>Логин: {{ user.username }}</li>
         <li>email: {{ user.email }}</li>
         <li>ФИО: {{ user.get_full_name }}</li>
-        <li>Категории товаров: {{ category_count }}</li>
+        <li>Категории категорий: {{ category_count }}</li>
         <li>Количество товаров: {{ user.product.count }}</li>
-
     </ul>
     <hr>
     {% if user == request.user %}
-    <h4>Изминить пароль</h4>
-        <form action="{% url 'change-password' %}" method="POST"> 
+        <h4>Изменить пароль:</h4>
+        <form action="{% url 'change-password' %}" method="POST">
             {% csrf_token %}
             {% bootstrap_form password_change_form %}
             <button class="btn btn-info">Сохранить</button>
         </form>
+        <hr>
     {% endif %}
-    <h4>Ваши товары:</h4>
+    <h4>Товары этого пользователя:</h4>
+    <ul>
+        <li>{{ user.products }}</li>
+    </ul>
     {% include 'includes/products.html' %}
     
-{% endblock %} 
+{% endblock %}

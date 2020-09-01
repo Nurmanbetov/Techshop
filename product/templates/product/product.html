@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -9,32 +8,46 @@
         </div>
     {% endif %}
     <div class="col-lg-8 col-md-6 col-sm-12">
-        <h3>{{ product }}</h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for category in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'category' category.id %}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li class="breadcrumb-item active" aria-current="page">{{ product }}</li>
+            </ol>
+        </nav>
         <h3>{{ product.price }}$</h3>
-        
-        <div>{{ product.description|linebreaks }}</div>
+        <div>{{ product.description | linebreaks }}</div>
         {% if product.available %}
-            <h5 class="alert alert-success">Есть в наличии</h5>
+            <h5 class="alert alert-success" >Есть в наличии</h5>
         {% else %}
             <h5 class="alert alert-danger">Нет в наличии</h5>
         {% endif %}
         {% if request.user == product.user %}
-            <a
-                class="btn btn-lg btn-warning"
-                href="{% url 'product-edit' product.id %}"
-            >
-                Изменить
-            </a>
-            <hr>
             <a 
+                class="btn btn-lg btn-warning"
+                href="{% url 'product-edit' product.id %}" 
+            >
+                Изминить
+            </a>
+            <a
                 class="btn btn-lg btn-danger" 
                 href="{% url 'product-delete' product.id %}"
             >
                 Удалить
             </a>
+            <br>
+            <br>
         {% elif product.user %}
             <a href="{% url 'profile' product.user.id %}">{{ product.user }}</a>
         {% endif %}
     </div>
 </div>
+
+
 {% endblock %}
