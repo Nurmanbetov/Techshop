@@ -166,7 +166,7 @@ def product_delete(request, id):
     if product.user != request.user:
         context["message"] = "У вас нет доступа"
     else:
-        product.delete = True
+        product.deleted = True
         product.save()
         context["message"] = "Товар был удален"
 

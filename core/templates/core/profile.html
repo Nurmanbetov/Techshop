@@ -12,7 +12,7 @@
     </ul>
     <hr>
     {% if user == request.user %}
-        <h4>Изменить пароль:</h4>
+    <h4>Изменить пароль:</h4>
         <form action="{% url 'change-password' %}" method="POST">
             {% csrf_token %}
             {% bootstrap_form password_change_form %}
@@ -21,9 +21,6 @@
         <hr>
     {% endif %}
     <h4>Товары этого пользователя:</h4>
-    <ul>
-        <li>{{ user.products }}</li>
-    </ul>
     {% include 'includes/products.html' %}
     
 {% endblock %}
