@@ -147,16 +147,15 @@ def product_edit(request, id):
             form.save()
             context["product"] = Product.objects.get(id=id)
             context["message"] = "Информация успешно обновлена"
-            return render (request, "product/product.html", context)
+            return render(request, "product/product.html", context)
 
-        context["form"] = ProductForm(instance=product)
+    context["form"] = ProductForm(instance=product)
 
-        return render(
-            request,
-            "product/form.html",
-            context
-        )
-
+    return render(
+        request,
+        "product/create.html",
+        context
+    )
 
 @login_required(login_url="/login/")
 def product_delete(request, id):

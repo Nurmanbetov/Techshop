@@ -1,28 +1,26 @@
 from django.db import models
-from .models import *
+from product.models import Product
 
 
 class Order(models.Model):
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
 
 
-class ProductOrder(models.Model):
+class ProductInOrder(models.Model):
     order = models.ForeignKey(
         to=Order, on_delete=models.SET_NULL,
         null=True, blank=True, 
         related_name="product_in_order",
-        verbose_name="Заказ"
-
-    )
+        verbose_name="Заказ")
 
 
     product = models.ForeignKey(
         to=Product, on_delete=models.SET_NULL,
         null=True, blank=True, 
-        related_name="product_in_order"
-        verbose_name="Товар"
-    )
+        related_name="product_in_order",
+        verbose_name="Товар")
+        
 
     added = models.DateTimeField(
         auto_now_add=True,
