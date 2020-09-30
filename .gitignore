@@ -6,3 +6,4 @@ static/*
 media/*
 !media/static/
 .vscode
+chromedriver.exe
