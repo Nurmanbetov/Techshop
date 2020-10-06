@@ -26,9 +26,11 @@ class AuthTestCase(TestCase):
         driver.get("localhost:8000")
        
         driver.find_element_by_xpath("//a[@href='/login/']").click()
+        sleep(3)
+        driver.find_element_by_class_name("//a[contains(@href, 'login')]").click()
+        sleep(3)
         driver.find_element_by_xpath("//a[contains(@href, 'registration')]").click()
         sleep(3)
 
         #assert "form" in driver.page_source
-        self.assertIn("form", driver.page_source)
-    
+        self.assertIn("form", driver.page_source) 
