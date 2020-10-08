@@ -63,8 +63,19 @@
       <div class="col-lg-3 col-md-2">
         <div class="list-group">
           {% for category in categories %}
-            {% include "includes/category.html" %}
+          {% include "includes/category.html" %}
           {% endfor %}
+        </div>
+        <br>
+        <hr>
+        <h3 class="alert alert-success">Сделайте нас лучше!</h3>
+        <div class="container-fluid">
+          <h6>Вы можете оставить обратную связь мы это очень ценим!</h6>
+          <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form feedback_form %}
+            <button class="btn btn-info" > Отправить</button>
+          </form>
         </div>
       </div>
       <div class="col-lg-8 col-md-10"><br>
