@@ -6,10 +6,10 @@ from .forms import FeedBackForm
 @require_POST
 def feedback(request):
     context = {}
-    form = FeedBackForm(request.POST, require.FILES)
-    if forms.is_valid():
+    form = FeedBackForm(request.POST, request.FILES)
+    if form.is_valid():
         feedback = form.save()
-        if request.is_authenticated:
+        if request.user.is_authenticated:
             feedback.user = request.user
             feedback.save()
             

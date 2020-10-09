@@ -73,7 +73,10 @@
           <h6>Вы можете оставить обратную связь мы это очень ценим!</h6>
           <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form feedback_form %}
+            
+            {% for field in form %}
+              {% bootstrap_field  feedback_field %}
+            {% endfor %}
             <button class="btn btn-info" > Отправить</button>
           </form>
         </div>
